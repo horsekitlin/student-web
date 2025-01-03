@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import Counter from './components/Counter';
+import HomeScreen from './screens/HomeScreen';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
@@ -16,7 +16,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <AppContainer>
-        <Counter />
+        <HomeScreen />
       </AppContainer>
     </Provider>
   );
