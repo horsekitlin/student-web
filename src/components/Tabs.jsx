@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import StudentCard from './StudentCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { StyledFontAwesomeIcon } from './CustomStyledComponents';
 
 const TabsContainer = styled.div`
   display: flex;
@@ -38,10 +38,6 @@ const IconContainer = styled.div`
   margin-left: auto;
   display: flex;
   align-items: center;
-`;
-
-const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
-  margin-right: 8px;
 `;
 
 const Tabs = () => {
