@@ -12,9 +12,8 @@ export const store = configureStore({
       .concat(loggerMiddleware)
       .concat(apiMiddleware),
   devTools: {
-    // 自定義 Redux DevTools 配置
-    name: 'Class Student App', // DevTools 中顯示的名稱
-    trace: true, // 啟用 action 追蹤
-    traceLimit: 25, // 限制追蹤的 action 數量
+    name: 'Class Student App',
+    trace: true,
+    traceLimit: 25,
   },
 });

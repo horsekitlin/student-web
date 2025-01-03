@@ -1,8 +1,12 @@
 import React from 'react';
-import StudentCard from '../components/StudentCard';
+import Tabs from '../components/Tabs';
 
 const HomeScreen = () => {
-  return <StudentCard />;
+  return (
+    <div>
+      <Tabs />
+    </div>
+  );
 };
 
 export default HomeScreen;
