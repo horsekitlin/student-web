@@ -21,7 +21,7 @@ jobs:
       - name: Build Docker image
         run: |
           npm install
-          npm run biuld
+          npm run build
           docker build -t ${{ secrets.DOCKER_USERNAME }}/student-web:latest .
 
       - name: Push Docker image to Docker Hub
