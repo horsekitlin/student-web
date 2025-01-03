@@ -10,7 +10,9 @@ const TabsContainer = styled.div`
   border-bottom: 1px solid #30a3d2;
 `;
 
-const Tab = styled.div`
+const Tab = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['active'].includes(prop), // 不将 active 属性传递给 DOM
+})`
   padding: 10px 20px;
   color: ${(props) => (props.active ? '#30a3d2' : '#0e0e0f')};
   transition: color 0.3s ease;
