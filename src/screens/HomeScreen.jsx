@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Tabs from '../components/Tabs';
-import { faAngleLeft, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faUser, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { StyledFontAwesomeIcon } from '../components/CustomStyledComponents';
 
 const Header = styled.div`
@@ -25,6 +25,10 @@ const Text = styled.span`
   font-size: 1rem;
 `;
 
+const IconContainer = styled.div`
+  margin-left: auto;
+`;
+
 const HomeScreen = () => {
   return (
     <div>
@@ -32,6 +36,9 @@ const HomeScreen = () => {
         <TopRow>
           <StyledFontAwesomeIcon icon={faAngleLeft} />
           <Text>Back to Class List</Text>
+          <IconContainer>
+            <StyledFontAwesomeIcon icon={faTimes} />
+          </IconContainer>
         </TopRow>
         <BottomRow>
           <Text>302 Science</Text>
