@@ -62,21 +62,27 @@ const Button = styled.button.withConfig({
   pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;
 
-const StudentCard = ({ activeTab, disabled }) => {
+const disabledDecrementButton = (item) => {
+  if (item.completed) return true;
+  if (item.amount === 0) return true;
+  return false;
+};
+
+const StudentCard = ({ item, index, activeTab }) => {
   const [count, setCount] = React.useState(0);
 
   return (
     <Card>
-      <Header disabled={disabled}>
-        {activeTab} 01
+      <Header disabled={item.completed}>
+        {activeTab} {index}
       </Header>
-      <Content disabled>
-        <ContentText disabled>Philip</ContentText>
+      <Content disabled={item.completed}>
+        <ContentText disabled={item.completed}>{item.name}</ContentText>
       </Content>
-      <Footer disabled={disabled}>
-        <Button disabled variant="decrement" onClick={() => setCount(count - 1)}>-1</Button>
-        <span>{count}</span>
-        <Button disabled variant="increment" onClick={() => setCount(count + 1)}>+1</Button>
+      <Footer disabled={item.completed}>
+        <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={() => setCount(count - 1)}>-1</Button>
+        <span>{item.amount}</span>
+        <Button disabled={item.completed} variant="increment" onClick={() => setCount(count + 1)}>+1</Button>
       </Footer>
     </Card>
   );

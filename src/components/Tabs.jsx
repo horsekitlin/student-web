@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import StudentCard from './StudentCard';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { StyledFontAwesomeIcon } from './CustomStyledComponents';
+import mockData from '../mockData/data';
 
-const TabsContainer = styled.div`
+
+const TabsHeader = styled.div`
   display: flex;
   cursor: pointer;
   border-bottom: 1px solid #30a3d2;
 `;
 
 const Tab = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['active'].includes(prop), // 不将 active 属性传递给 DOM
+  shouldForwardProp: (prop) => !['active'].includes(prop),
 })`
   padding: 10px 20px;
   color: ${(props) => (props.active ? '#30a3d2' : '#0e0e0f')};
@@ -24,7 +26,7 @@ const Tab = styled.div.withConfig({
 
 const TabContent = styled.div`
   padding: 20px;
-  overflow-y: auto;
+  overflow-y: hidden  ;
 `;
 
 const StudentCardsContainer = styled.div`
@@ -44,14 +46,12 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
 
   const renderStudentCards = (activeTab) => {
-    return Array.from({ length: 100 }, (_, index) => (
-      <StudentCard key={index} activeTab={activeTab} />
-    ));
+    return mockData.map((item, index) => (<StudentCard key={index} activeTab={activeTab} item={item} />));
   };
 
   return (
     <div>
-      <TabsContainer>
+      <TabsHeader>
         <Tab active={activeTab === 'students'} onClick={() => setActiveTab('students')}>
           Student List
         </Tab>
@@ -61,7 +61,7 @@ const Tabs = () => {
         <IconContainer>
           <StyledFontAwesomeIcon icon={faEllipsisVertical} />
         </IconContainer>
-      </TabsContainer>
+      </TabsHeader>
       <TabContent>
         {activeTab === 'students' ? (
           <StudentCardsContainer>

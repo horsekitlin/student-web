@@ -7,9 +7,7 @@ const showMain = false;
 const HomeScreen = () => {
   if (showMain) {
     return (
-      <div>
         <MainComponent />
-      </div>
     );
   }
 
