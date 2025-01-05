@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -68,21 +67,20 @@ const disabledDecrementButton = (item) => {
   return false;
 };
 
-const StudentCard = ({ item, index, activeTab }) => {
-  const [count, setCount] = React.useState(0);
-
+const StudentCard = ({ item, index }) => {
+  
   return (
     <Card>
       <Header disabled={item.completed}>
-        {activeTab} {index}
+        {item.title}
       </Header>
       <Content disabled={item.completed}>
         <ContentText disabled={item.completed}>{item.name}</ContentText>
       </Content>
       <Footer disabled={item.completed}>
-        <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={() => setCount(count - 1)}>-1</Button>
+        <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={() => false}>-1</Button>
         <span>{item.amount}</span>
-        <Button disabled={item.completed} variant="increment" onClick={() => setCount(count + 1)}>+1</Button>
+        <Button disabled={item.completed} variant="increment" onClick={() => false}>+1</Button>
       </Footer>
     </Card>
   );

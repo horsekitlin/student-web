@@ -4,6 +4,7 @@ import {
   faAngleLeft,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+import { useParams } from 'react-router-dom';
 import {StyledFontAwesomeIcon} from '../components/CustomStyledComponents';
 import QRCode from 'react-qr-code';
 import copyIcon from '../assets/icons/copy.png';
@@ -59,13 +60,14 @@ const CopyIconContainer = styled.div`
 
 const Content = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 20px 0;
   flex-grow: 1;
 `;
 
-const DetailComponent = () => {
+const DetailScreen = () => {
+  const { id } = useParams();
+  const numericId = Number(id);
+
   return (
     <Container>
       <Header>
@@ -80,7 +82,7 @@ const DetailComponent = () => {
           <Text>Join 302 Science</Text>
         </BottomRow>
         <BottomRow>
-          <Text>ID: X58E9647</Text>
+          <Text>ID: X58E9647(numericId: {numericId})</Text>
           <CopyIconContainer>
             <StyledImg src={copyIcon} alt="Copy" />
           </CopyIconContainer>
@@ -97,4 +99,4 @@ const DetailComponent = () => {
   );
 };
 
-export default DetailComponent;
+export default DetailScreen;

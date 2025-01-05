@@ -1,7 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from './store/store';
 import HomeScreen from './screens/HomeScreen';
+import DetailScreen from './screens/DetailScreen';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
@@ -11,9 +13,14 @@ const AppContainer = styled.div`
 const App = () => {
   return (
     <Provider store={store}>
-      <AppContainer>
-        <HomeScreen />
-      </AppContainer>
+      <Router>
+        <AppContainer>
+          <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/detail/:id" element={<DetailScreen />} />
+          </Routes>
+        </AppContainer>
+      </Router>
     </Provider>
   );
 };

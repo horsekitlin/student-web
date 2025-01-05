@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import StudentCard from './StudentCard';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { StyledFontAwesomeIcon } from './CustomStyledComponents';
-import mockData from '../mockData/data';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getStudentResult } from '../store/studentSlice';
 
 const TabsHeader = styled.div`
   display: flex;
@@ -45,8 +45,15 @@ const IconContainer = styled.div`
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
 
+  const dispatch = useDispatch();
+  const { items, error } = useSelector((state) => state.student); // 獲取 student 状態
+
+  useEffect(() => {
+    dispatch(getStudentResult()); // 呼叫 API 獲取學生資料
+  }, []);
+
   const renderStudentCards = (activeTab) => {
-    return mockData.map((item, index) => (<StudentCard key={index} activeTab={activeTab} item={item} />));
+    return items.map((item, index) => (<StudentCard key={`${item.name}-${index}  `} activeTab={activeTab} index={index} item={item} />));
   };
 
   return (
