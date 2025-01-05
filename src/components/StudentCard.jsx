@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -68,14 +69,19 @@ const disabledDecrementButton = (item) => {
 };
 
 const StudentCard = ({ item, index }) => {
-  
   return (
     <Card>
       <Header disabled={item.completed}>
         {item.title}
       </Header>
       <Content disabled={item.completed}>
-        <ContentText disabled={item.completed}>{item.name}</ContentText>
+      {item.completed ? (
+          <ContentText disabled={item.completed}>{item.name}</ContentText>
+        ) : (
+          <Link to={`/detail/${index}`} style={{ color: 'white', textDecoration: 'none' }}>
+            <ContentText disabled={item.completed}>{item.name}</ContentText>
+          </Link>
+        )}
       </Content>
       <Footer disabled={item.completed}>
         <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={() => false}>-1</Button>

@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import {StyledFontAwesomeIcon} from '../components/CustomStyledComponents';
 import QRCode from 'react-qr-code';
 import copyIcon from '../assets/icons/copy.png';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -66,12 +67,12 @@ const Content = styled.div`
 
 const DetailScreen = () => {
   const { id } = useParams();
-  const numericId = Number(id);
+  const item = useSelector((state) => state.student.items[id]);
 
   return (
     <Container>
       <Header>
-        <TopRow>
+        <TopRow onClick={() => false}>
           <StyledFontAwesomeIcon icon={faAngleLeft} />
           <Text>Back to Class List</Text>
           <IconContainer>
@@ -82,7 +83,7 @@ const DetailScreen = () => {
           <Text>Join 302 Science</Text>
         </BottomRow>
         <BottomRow>
-          <Text>ID: X58E9647(numericId: {numericId})</Text>
+          <Text>ID: {item.id} </Text>
           <CopyIconContainer>
             <StyledImg src={copyIcon} alt="Copy" />
           </CopyIconContainer>

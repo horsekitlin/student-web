@@ -46,10 +46,10 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
 
   const dispatch = useDispatch();
-  const { items, error } = useSelector((state) => state.student); // 獲取 student 状態
+  const { items } = useSelector((state) => state.student);
 
   useEffect(() => {
-    dispatch(getStudentResult()); // 呼叫 API 獲取學生資料
+    dispatch(getStudentResult());
   }, []);
 
   const renderStudentCards = (activeTab) => {
