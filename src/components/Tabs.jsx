@@ -10,6 +10,7 @@ const TabsHeader = styled.div`
   display: flex;
   cursor: pointer;
   border-bottom: 1px solid #30a3d2;
+  position: relative;
 `;
 
 const Tab = styled.div.withConfig({
@@ -26,7 +27,7 @@ const Tab = styled.div.withConfig({
 
 const TabContent = styled.div`
   padding: 20px;
-  overflow-y: hidden  ;
+  overflow-y: hidden;
 `;
 
 const StudentCardsContainer = styled.div`
@@ -42,23 +43,53 @@ const IconContainer = styled.div`
   align-items: center;
 `;
 
+const Tooltip = styled.div`
+  position: absolute;
+  bottom: 100%;
+  left: 10%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #30a3d2;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  transition: opacity 0.2s;
+`;  
+
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [dotCount, setDotCount] = useState(0);
 
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.student);
 
   useEffect(() => {
     dispatch(getStudentResult());
-  }, []);
+  }, [dispatch]);
 
   const renderStudentCards = (activeTab) => {
-    return items.map((item, index) => (<StudentCard key={`${item.name}-${index}  `} activeTab={activeTab} index={index} item={item} />));
+    return items.map((item, index) => (
+      <StudentCard key={`${item.name}-${index}`} activeTab={activeTab} index={index} item={item} />
+    ));
   };
 
   const handleKeyDown = (event) => {
+    if (event.key === '.') {
+      setDotCount((prev) => {
+        const newCount = prev + 1;
+        if (newCount === 3) {
+          setTooltipVisible(true);
+          setTimeout(() => setTooltipVisible(false), 1000);
+          return 0;
+        }
+        return newCount;
+      });
+    }
+
     if (event.key === 'Tab') {
-      event.preventDefault();
       setActiveTab((prev) => (prev === 'students' ? 'group' : 'students'));
     }
   };
@@ -66,6 +97,7 @@ const Tabs = () => {
   return (
     <div onKeyDown={handleKeyDown} tabIndex={0}>
       <TabsHeader>
+        <Tooltip visible={tooltipVisible}>Hello World!</Tooltip>
         <Tab active={activeTab === 'students'} onClick={() => setActiveTab('students')}>
           Student List
         </Tab>
@@ -77,15 +109,9 @@ const Tabs = () => {
         </IconContainer>
       </TabsHeader>
       <TabContent>
-        {activeTab === 'students' ? (
-          <StudentCardsContainer>
-            {renderStudentCards(activeTab)}
-          </StudentCardsContainer>
-        ) : (
-          <StudentCardsContainer>
-            {renderStudentCards(activeTab)}
-          </StudentCardsContainer>
-        )}
+        <StudentCardsContainer>
+          {renderStudentCards(activeTab)}
+        </StudentCardsContainer>
       </TabContent>
     </div>
   );
