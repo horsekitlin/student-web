@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  faAngleLeft,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
-import { useParams } from 'react-router-dom';
+import {faAngleLeft, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {useParams, Navigate} from 'react-router-dom';
 import {StyledFontAwesomeIcon} from '../components/CustomStyledComponents';
 import QRCode from 'react-qr-code';
 import copyIcon from '../assets/icons/copy.png';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const Container = styled.div`
   display: flex;
@@ -57,6 +55,7 @@ const CopyIconContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 5px;
+  cursor: pointer;
 `;
 
 const Content = styled.div`
@@ -66,8 +65,13 @@ const Content = styled.div`
 `;
 
 const DetailScreen = () => {
-  const { id } = useParams();
-  const item = useSelector((state) => state.student.items[id]);
+  const {id} = useParams();
+  const items = useSelector((state) => state.student.items);
+  const item = items[id];
+
+  if (!item) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <Container>
@@ -85,11 +89,19 @@ const DetailScreen = () => {
         <BottomRow>
           <Text>ID: {item.id} </Text>
           <CopyIconContainer>
-            <StyledImg src={copyIcon} alt="Copy" />
+            <CopyToClipboard
+              text={item.id}
+              onCopy={() => alert('複製 ID 成功')}>
+              <StyledImg src={copyIcon} alt="Copy" />
+            </CopyToClipboard>
           </CopyIconContainer>
           <Text>Link</Text>
           <CopyIconContainer>
-            <StyledImg src={copyIcon} alt="Copy" />
+            <CopyToClipboard
+              text="https://www.classswift.viewsonic.io/"
+              onCopy={() => alert('複製 Link 成功')}>
+              <StyledImg src={copyIcon} alt="Copy" />
+            </CopyToClipboard>
           </CopyIconContainer>
         </BottomRow>
       </Header>
