@@ -56,8 +56,15 @@ const Tabs = () => {
     return items.map((item, index) => (<StudentCard key={`${item.name}-${index}  `} activeTab={activeTab} index={index} item={item} />));
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setActiveTab((prev) => (prev === 'students' ? 'group' : 'students'));
+    }
+  };
+
   return (
-    <div>
+    <div onKeyDown={handleKeyDown} tabIndex={0}>
       <TabsHeader>
         <Tab active={activeTab === 'students'} onClick={() => setActiveTab('students')}>
           Student List
