@@ -9,6 +9,7 @@ import {
   incrementItem,
   decrementItem,
 } from '../store/studentSlice';
+import StudentCards from '../components/StudentCards';
 
 const TabsHeader = styled.div`
   display: flex;
@@ -72,6 +73,50 @@ const handleDecrement = (dispatch, index) => () => {
   dispatch(decrementItem({index}));
 };
 
+const getHandleKeyDown = (options) => (event) => {
+  const {
+    items,
+    itemIndex,
+    dispatch,
+    setDotCount,
+    setActiveTab,
+    setItemIndex,
+    handleIncrement,
+    handleDecrement,
+    setTooltipVisible,
+  } = options;
+
+  if (event.key === '.') {
+    setDotCount((prev) => {
+      const newCount = prev + 1;
+      if (newCount === 3) {
+        setTooltipVisible(true);
+        setTimeout(() => setTooltipVisible(false), 1000);
+        return 0;
+      }
+      return newCount;
+    });
+  }
+
+  if (event.key === 'Tab') {
+    setActiveTab((prev) => (prev === 'students' ? 'group' : 'students'));
+  }
+
+  if (event.key === '+' || event.key === '-') {
+    const nextItemIndex =
+      itemIndex === null
+        ? items.findIndex((item) => !item.completed)
+        : itemIndex;
+    const handleFunction =
+      event.key === '-'
+        ? handleDecrement(dispatch, nextItemIndex)
+        : handleIncrement(dispatch, nextItemIndex);
+
+    setItemIndex(nextItemIndex);
+    handleFunction();
+  }
+};
+
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -104,23 +149,19 @@ const Tabs = () => {
     ));
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === '.') {
-      setDotCount((prev) => {
-        const newCount = prev + 1;
-        if (newCount === 3) {
-          setTooltipVisible(true);
-          setTimeout(() => setTooltipVisible(false), 1000);
-          return 0;
-        }
-        return newCount;
-      });
-    }
-
-    if (event.key === 'Tab') {
-      setActiveTab((prev) => (prev === 'students' ? 'group' : 'students'));
-    }
+  const keydownOptions = {
+    items,
+    itemIndex,
+    dispatch,
+    setDotCount,
+    setActiveTab,
+    setItemIndex,
+    handleIncrement,
+    handleDecrement,
+    setTooltipVisible,
   };
+
+  const handleKeyDown = getHandleKeyDown(keydownOptions);
 
   return (
     <div onKeyDown={handleKeyDown} tabIndex={0}>
@@ -142,7 +183,14 @@ const Tabs = () => {
       </TabsHeader>
       <TabContent>
         <StudentCardsContainer>
-          {renderStudentCards(activeTab)}
+          <StudentCards
+            items={items}
+            activeTab={activeTab}
+            handleIncrement={handleIncrement}
+            handleDecrement={handleDecrement}
+            setItemIndex={setItemIndex}
+            itemIndex={itemIndex}
+          />
         </StudentCardsContainer>
       </TabContent>
     </div>
