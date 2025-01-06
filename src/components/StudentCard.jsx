@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
-const Card = styled.div`
-  border: 1px solid #30a3d2;
+const Card = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
+})`
+  border: 1px solid ${(props) => (props.isSelected ? 'red' : '#30a3d2')};
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   min-width: 200px;
@@ -58,7 +60,7 @@ const Button = styled.button.withConfig({
     if (props.variant === 'increment') return '#7aca41';
     return '#ef486b';
   }};
-  
+
   pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;
 
@@ -68,25 +70,42 @@ const disabledDecrementButton = (item) => {
   return false;
 };
 
-const StudentCard = ({ item, index, handleIncrement, handleDecrement }) => {
+const StudentCard = ({
+  item,
+  index,
+  isSelected,
+  onClick,
+  handleIncrement,
+  handleDecrement,
+}) => {
   return (
-    <Card>
-      <Header disabled={item.completed}>
-        {item.title}
-      </Header>
+    <Card isSelected={isSelected} onClick={onClick}>
+      <Header disabled={item.completed}>{item.title}</Header>
       <Content disabled={item.completed}>
-      {item.completed ? (
+        {item.completed ? (
           <ContentText disabled={item.completed}>{item.name}</ContentText>
         ) : (
-          <Link to={`/detail/${index}`} style={{ color: 'white', textDecoration: 'none' }}>
+          <Link
+            to={`/detail/${index}`}
+            style={{color: 'white', textDecoration: 'none'}}>
             <ContentText disabled={item.completed}>{item.name}</ContentText>
           </Link>
         )}
       </Content>
       <Footer disabled={item.completed}>
-        <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={handleDecrement}>-1</Button>
+        <Button
+          disabled={disabledDecrementButton(item)}
+          variant="decrement"
+          onClick={handleDecrement}>
+          -1
+        </Button>
         <span>{item.amount}</span>
-        <Button disabled={item.completed} variant="increment" onClick={handleIncrement}>+1</Button>
+        <Button
+          disabled={item.completed}
+          variant="increment"
+          onClick={handleIncrement}>
+          +1
+        </Button>
       </Footer>
     </Card>
   );

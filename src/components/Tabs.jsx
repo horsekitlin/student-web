@@ -75,10 +75,10 @@ const handleDecrement = (dispatch, index) => () => {
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [itemIndex, setItemIndex] = useState(null);
   const [_, setDotCount] = useState(0);
 
   const dispatch = useDispatch();
-
   const {items} = useSelector((state) => state.student);
 
   useEffect(() => {
@@ -94,6 +94,12 @@ const Tabs = () => {
         item={item}
         handleIncrement={handleIncrement(dispatch, index)}
         handleDecrement={handleDecrement(dispatch, index)}
+        onClick={() => {
+          if (!item.completed) {
+            setItemIndex(index);
+          }
+        }}
+        isSelected={itemIndex === index}
       />
     ));
   };
