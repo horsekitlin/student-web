@@ -43,7 +43,9 @@ const IconContainer = styled.div`
   align-items: center;
 `;
 
-const Tooltip = styled.div`
+const Tooltip = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['visible', 'visibility'].includes(prop),
+})`
   position: absolute;
   bottom: 100%;
   left: 10%;
