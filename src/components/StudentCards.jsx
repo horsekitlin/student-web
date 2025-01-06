@@ -4,27 +4,18 @@ import StudentCard from './StudentCard';
 const StudentCards = (props) => {
   const {
     items,
-    activeTab,
+    dispatch,
     handleIncrement,
     handleDecrement,
-    setItemIndex,
-    itemIndex,
   } = props;
 
   return items.map((item, index) => (
     <StudentCard
       key={`${item.name}-${index}`}
-      activeTab={activeTab}
       index={index}
       item={item}
-      handleIncrement={handleIncrement(index)}
-      handleDecrement={handleDecrement(index)}
-      onClick={() => {
-        if (!item.completed) {
-          setItemIndex(index);
-        }
-      }}
-      isSelected={itemIndex === index}
+      handleIncrement={handleIncrement(dispatch, index)}
+      handleDecrement={handleDecrement(dispatch, index)}
     />
   ));
 };

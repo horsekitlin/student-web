@@ -6,9 +6,12 @@ import { StyledFontAwesomeIcon } from './CustomStyledComponents';
 const Wrapper = styled.div`
   display: flex;
   flex: 1;
-  background-color: rgba(231, 234, 234, 0.8);
   justify-content: center;
   align-items: center;
+`;
+
+const Content = styled.div`
+background-color: #e7eaea;
 `;
 
 const Modal = styled.div`
@@ -17,7 +20,7 @@ const Modal = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   justify-content: center;
-  background-color: #FFF;
+  background-color: #e7eaea;
 `;
 
 const CloseIcon = styled(StyledFontAwesomeIcon)`
@@ -40,9 +43,9 @@ const ModalWrapper = ({ children }) => {
           <IconContainer>
             <CloseIcon icon={faTimes} onClick={() => setVisible(false)} />
           </IconContainer>
-          <div>
+          <Content>
             {children}
-          </div>
+          </Content>
         </Modal>
       </Wrapper>
     );

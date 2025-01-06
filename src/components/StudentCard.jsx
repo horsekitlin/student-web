@@ -1,12 +1,9 @@
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
-const Card = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
-})`
-  border: 1px solid ${(props) => (props.isSelected ? 'red' : '#30a3d2')};
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+const Card = styled.div`
+  border: 1px solid ${(props) => (props.disabled ? '#afafaf' : '#30a3d2')};
+  border-radius: 4px;
   min-width: 200px;
   overflow: hidden;
   margin: 10px;
@@ -31,7 +28,7 @@ const Content = styled.div`
 
 const ContentText = styled.p`
   font-weight: 600;
-  font-size: 48px;
+  font-size: 36px;
   color: ${(props) => (props.disabled ? '#afafaf' : 'black')};
 `;
 
@@ -50,7 +47,7 @@ const Button = styled.button.withConfig({
 })`
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   color: white;
   cursor: pointer;
   margin: 0 8px;
@@ -73,13 +70,11 @@ const disabledDecrementButton = (item) => {
 const StudentCard = ({
   item,
   index,
-  isSelected,
-  onClick,
   handleIncrement,
   handleDecrement,
 }) => {
   return (
-    <Card isSelected={isSelected} onClick={onClick}>
+    <Card disabled={item.completed}>
       <Header disabled={item.completed}>{item.title}</Header>
       <Content disabled={item.completed}>
         {item.completed ? (

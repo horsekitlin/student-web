@@ -11,6 +11,10 @@ import {
 } from '../store/studentSlice';
 import StudentCards from '../components/StudentCards';
 
+const Container = styled.div`
+  background-color: '#e7eaea';
+`;
+
 const TabsHeader = styled.div`
   display: flex;
   cursor: pointer;
@@ -22,20 +26,20 @@ const Tab = styled.div.withConfig({
   shouldForwardProp: (prop) => !['active'].includes(prop),
 })`
   padding: 10px 20px;
-  color: ${(props) => (props.active ? '#30a3d2' : '#0e0e0f')};
-  transition: color 0.3s ease;
+  margin: 0px 5px 0px 0px;
+  font-weight: 800;
+  color: ${(props) => (props.active ? '#0c8bef' : '#040404')};
+  background-color: ${(props) => (props.active ? '#fff' : '#afafaf')};
+  border-radius: 4px 4px 0 0;
+  transition: color 0.3s ease, background-color 0.3s ease;
 
   &:hover {
     color: #30a3d2;
   }
 `;
-
 const TabContent = styled.div`
   padding: 20px;
   overflow-y: hidden;
-`;
-
-const StudentCardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -49,7 +53,7 @@ const IconContainer = styled.div`
 `;
 
 const Tooltip = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['visible', 'visibility'].includes(prop),
+  shouldForwardProp: (prop) => !['visible'].includes(prop),
 })`
   position: absolute;
   bottom: 100%;
@@ -76,11 +80,9 @@ const handleDecrement = (dispatch, index) => () => {
 const getHandleKeyDown = (options) => (event) => {
   const {
     items,
-    itemIndex,
     dispatch,
     setDotCount,
     setActiveTab,
-    setItemIndex,
     handleIncrement,
     handleDecrement,
     setTooltipVisible,
@@ -103,16 +105,12 @@ const getHandleKeyDown = (options) => (event) => {
   }
 
   if (event.key === '+' || event.key === '-') {
-    const nextItemIndex =
-      itemIndex === null
-        ? items.findIndex((item) => !item.completed)
-        : itemIndex;
+    const nextItemIndex = items.findIndex((item) => !item.completed);
     const handleFunction =
       event.key === '-'
         ? handleDecrement(dispatch, nextItemIndex)
         : handleIncrement(dispatch, nextItemIndex);
 
-    setItemIndex(nextItemIndex);
     handleFunction();
   }
 };
@@ -120,7 +118,6 @@ const getHandleKeyDown = (options) => (event) => {
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [itemIndex, setItemIndex] = useState(null);
   const [_, setDotCount] = useState(0);
 
   const dispatch = useDispatch();
@@ -130,32 +127,11 @@ const Tabs = () => {
     dispatch(getStudentResult());
   }, [dispatch]);
 
-  const renderStudentCards = (activeTab) => {
-    return items.map((item, index) => (
-      <StudentCard
-        key={`${item.name}-${index}`}
-        activeTab={activeTab}
-        index={index}
-        item={item}
-        handleIncrement={handleIncrement(dispatch, index)}
-        handleDecrement={handleDecrement(dispatch, index)}
-        onClick={() => {
-          if (!item.completed) {
-            setItemIndex(index);
-          }
-        }}
-        isSelected={itemIndex === index}
-      />
-    ));
-  };
-
   const keydownOptions = {
     items,
-    itemIndex,
     dispatch,
     setDotCount,
     setActiveTab,
-    setItemIndex,
     handleIncrement,
     handleDecrement,
     setTooltipVisible,
@@ -164,7 +140,7 @@ const Tabs = () => {
   const handleKeyDown = getHandleKeyDown(keydownOptions);
 
   return (
-    <div onKeyDown={handleKeyDown} tabIndex={0}>
+    <Container onKeyDown={handleKeyDown} tabIndex={0}>
       <TabsHeader>
         <Tooltip visible={tooltipVisible}>Hello World!</Tooltip>
         <Tab
@@ -182,18 +158,14 @@ const Tabs = () => {
         </IconContainer>
       </TabsHeader>
       <TabContent>
-        <StudentCardsContainer>
           <StudentCards
             items={items}
-            activeTab={activeTab}
+            dispatch={dispatch}
             handleIncrement={handleIncrement}
             handleDecrement={handleDecrement}
-            setItemIndex={setItemIndex}
-            itemIndex={itemIndex}
           />
-        </StudentCardsContainer>
       </TabContent>
-    </div>
+    </Container>
   );
 };
 
