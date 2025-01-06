@@ -31,11 +31,24 @@ const TopRow = styled.div`
 const BottomRow = styled.div`
   display: flex;
   align-items: center;
+  margin: 5px 0px;
+`;
+
+const BackText = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
+`;
+
+const VersionText = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
+  color: #afafaf;
 `;
 
 const Text = styled.span`
   margin-right: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 const StyledImg = styled.img`
@@ -46,21 +59,22 @@ const StyledImg = styled.img`
 const CopyIconContainer = styled.div`
   background-color: #0c8bef;
   border-radius: 4px;
-  margin-right: 4px;
+  margin-right: 12px;
+  margin-left: 4px;
   padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 5px;
   cursor: pointer;
 `;
 
 const Content = styled.div`
   display: flex;
-  margin: 20px 0;
-  flex-grow: 1;
+  justify-content: center;
 `;
 
+const Footer = styled.div`
+  display: flex;
+  margin: 20px 0;
+  justify-content: center;
+`;
 const DetailScreen = () => {
   const {id} = useParams();
   const navigate = useNavigate();
@@ -77,13 +91,13 @@ const DetailScreen = () => {
         <Header>
           <TopRow onClick={() => navigate(-1)}>
             <StyledFontAwesomeIcon icon={faAngleLeft} />
-            <Text>Back to Class List</Text>
+            <BackText>Back to Class List</BackText>
           </TopRow>
           <BottomRow>
             <Text>Join 302 Science</Text>
           </BottomRow>
           <BottomRow>
-            <Text>ID: {item.id} </Text>
+            <Text>ID: {item.id.split("-")[0]} </Text>
             <CopyIconContainer>
               <CopyToClipboard
                 text={item.id}
@@ -104,6 +118,10 @@ const DetailScreen = () => {
         <Content>
           <QRCode value="https://www.classswift.viewsonic.io/" />
         </Content>
+        <Footer>
+
+        <VersionText>Version 1.1.7</VersionText>
+        </Footer>
       </Container>
     </ModalWrapper>
   );

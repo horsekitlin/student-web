@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
-import StudentCard from './StudentCard';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 import {StyledFontAwesomeIcon} from './CustomStyledComponents';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getStudentResult,
   incrementItem,
   decrementItem,
 } from '../store/studentSlice';
@@ -122,10 +120,6 @@ const Tabs = () => {
 
   const dispatch = useDispatch();
   const {items} = useSelector((state) => state.student);
-
-  useEffect(() => {
-    dispatch(getStudentResult());
-  }, [dispatch]);
 
   const keydownOptions = {
     items,

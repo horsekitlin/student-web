@@ -1,17 +1,18 @@
 import {createSelector} from '@reduxjs/toolkit';
 
-const selectItems = (state) => state.student.items;
+const student = (state) => state.student;
 
 export const selectTotals = createSelector(
-  [selectItems],
-  (items) => {
-    const unCompletedAmount = items.reduce((result, item) => {
+  [student],
+  (student) => {
+    const unCompletedAmount = student.items.reduce((result, item) => {
       return item.completed ? result + 1 : result;
     }, 0);
 
     return {
+      isLoading: student.isLoading,
       unCompletedAmount,
-      totalAmount: items.length,
+      totalAmount: student.items.length,
     };
   }
 );

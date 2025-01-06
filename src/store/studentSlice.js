@@ -13,6 +13,7 @@ const studentSlice = createSlice({
   initialState: {
     items: [],
     error: null,
+    isLoading: true,
   },
   reducers: {
     incrementItem: (state, action) => {
@@ -30,11 +31,17 @@ const studentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getStudentResult.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(getStudentResult.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.isLoading = false;
       })
       .addCase(getStudentResult.rejected, (state, action) => {
         state.error = action.error.message;
+        state.isLoading = false;
       });
   },
 });

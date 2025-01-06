@@ -1,11 +1,12 @@
+import {useEffect} from 'react';
 import styled from 'styled-components';
-import {createSelector} from '@reduxjs/toolkit';
 import Tabs from '../components/Tabs';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {StyledFontAwesomeIcon} from '../components/CustomStyledComponents';
 import ModalWrapper from '../components/ModalWrapper';
-import { selectTotals } from '../utils/selector'; 
-import { useSelector } from 'react-redux';
+import {selectTotals} from '../utils/selector';
+import {useDispatch, useSelector} from 'react-redux';
+import {getStudentResult} from '../store/studentSlice';
 
 const Header = styled.div`
   display: flex;
@@ -23,12 +24,43 @@ const Text = styled.span`
   font-size: 1rem;
 `;
 
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(231, 234, 234, 0.8);
+  z-index: 1000;
+`;
+
+const LoadingText = styled.span`
+  font-size: 24px;
+  color: #0c8bef;
+`;
+
 const IconContainer = styled.div`
   margin-left: auto;
 `;
 
 const HomeScreen = () => {
-  const { totalAmount, unCompletedAmount } = useSelector(selectTotals);
+  const {isLoading, totalAmount, unCompletedAmount} = useSelector(selectTotals);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getStudentResult());
+  }, []);
+
+  if (isLoading) {
+    return (
+      <LoadingOverlay>
+        <LoadingText>Loading...</LoadingText>
+      </LoadingOverlay>
+    );
+  }
 
   return (
     <ModalWrapper>
