@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import StudentCard from './StudentCard';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { StyledFontAwesomeIcon } from './CustomStyledComponents';
-import { useDispatch, useSelector } from 'react-redux';
-import { getStudentResult } from '../store/studentSlice';
+import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
+import {StyledFontAwesomeIcon} from './CustomStyledComponents';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  getStudentResult,
+  incrementItem,
+  decrementItem,
+} from '../store/studentSlice';
 
 const TabsHeader = styled.div`
   display: flex;
@@ -58,15 +62,24 @@ const Tooltip = styled.div.withConfig({
   visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s;
-`;  
+`;
+
+const handleIncrement = (dispatch, index) => () => {
+  dispatch(incrementItem({index}));
+};
+
+const handleDecrement = (dispatch, index) => () => {
+  dispatch(decrementItem({index}));
+};
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('students');
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [dotCount, setDotCount] = useState(0);
+  const [_, setDotCount] = useState(0);
 
   const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.student);
+
+  const {items} = useSelector((state) => state.student);
 
   useEffect(() => {
     dispatch(getStudentResult());
@@ -74,7 +87,14 @@ const Tabs = () => {
 
   const renderStudentCards = (activeTab) => {
     return items.map((item, index) => (
-      <StudentCard key={`${item.name}-${index}`} activeTab={activeTab} index={index} item={item} />
+      <StudentCard
+        key={`${item.name}-${index}`}
+        activeTab={activeTab}
+        index={index}
+        item={item}
+        handleIncrement={handleIncrement(dispatch, index)}
+        handleDecrement={handleDecrement(dispatch, index)}
+      />
     ));
   };
 
@@ -100,10 +120,14 @@ const Tabs = () => {
     <div onKeyDown={handleKeyDown} tabIndex={0}>
       <TabsHeader>
         <Tooltip visible={tooltipVisible}>Hello World!</Tooltip>
-        <Tab active={activeTab === 'students'} onClick={() => setActiveTab('students')}>
+        <Tab
+          active={activeTab === 'students'}
+          onClick={() => setActiveTab('students')}>
           Student List
         </Tab>
-        <Tab active={activeTab === 'group'} onClick={() => setActiveTab('group')}>
+        <Tab
+          active={activeTab === 'group'}
+          onClick={() => setActiveTab('group')}>
           Group
         </Tab>
         <IconContainer>

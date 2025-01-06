@@ -14,7 +14,20 @@ const studentSlice = createSlice({
     items: [],
     error: null,
   },
-  reducers: {},
+  reducers: {
+    incrementItem: (state, action) => {
+      const { index } = action.payload;
+      if (index >= 0 && index < state.items.length) {
+        state.items[index].amount = state.items[index].amount + 1;
+      }
+    },
+    decrementItem: (state, action) => {
+      const { index } = action.payload;
+      if (index >= 0 && index < state.items.length) {
+        state.items[index].amount = state.items[index].amount - 1;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getStudentResult.fulfilled, (state, action) => {
@@ -26,4 +39,5 @@ const studentSlice = createSlice({
   },
 });
 
+export const { incrementItem, decrementItem } = studentSlice.actions;
 export default studentSlice.reducer;

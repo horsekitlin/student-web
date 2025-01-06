@@ -68,7 +68,7 @@ const disabledDecrementButton = (item) => {
   return false;
 };
 
-const StudentCard = ({ item, index }) => {
+const StudentCard = ({ item, index, handleIncrement, handleDecrement }) => {
   return (
     <Card>
       <Header disabled={item.completed}>
@@ -84,9 +84,9 @@ const StudentCard = ({ item, index }) => {
         )}
       </Content>
       <Footer disabled={item.completed}>
-        <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={() => false}>-1</Button>
+        <Button disabled={disabledDecrementButton(item)} variant="decrement" onClick={handleDecrement}>-1</Button>
         <span>{item.amount}</span>
-        <Button disabled={item.completed} variant="increment" onClick={() => false}>+1</Button>
+        <Button disabled={item.completed} variant="increment" onClick={handleIncrement}>+1</Button>
       </Footer>
     </Card>
   );
