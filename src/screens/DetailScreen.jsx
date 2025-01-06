@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import {faAngleLeft, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {useParams, Navigate} from 'react-router-dom';
+import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
+import {useParams, Navigate, useNavigate} from 'react-router-dom';
 import {StyledFontAwesomeIcon} from '../components/CustomStyledComponents';
 import QRCode from 'react-qr-code';
 import copyIcon from '../assets/icons/copy.png';
 import {useSelector} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import ModalWrapper from '../components/ModalWrapper';
 
 const Container = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
 `;
 
 const Header = styled.div`
@@ -25,6 +25,7 @@ const TopRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 const BottomRow = styled.div`
@@ -35,10 +36,6 @@ const BottomRow = styled.div`
 const Text = styled.span`
   margin-right: 10px;
   font-size: 1rem;
-`;
-
-const IconContainer = styled.div`
-  margin-left: auto;
 `;
 
 const StyledImg = styled.img`
@@ -66,6 +63,7 @@ const Content = styled.div`
 
 const DetailScreen = () => {
   const {id} = useParams();
+  const navigate = useNavigate();
   const items = useSelector((state) => state.student.items);
   const item = items[id];
 
@@ -74,41 +72,40 @@ const DetailScreen = () => {
   }
 
   return (
-    <Container>
-      <Header>
-        <TopRow onClick={() => false}>
-          <StyledFontAwesomeIcon icon={faAngleLeft} />
-          <Text>Back to Class List</Text>
-          <IconContainer>
-            <StyledFontAwesomeIcon icon={faTimes} />
-          </IconContainer>
-        </TopRow>
-        <BottomRow>
-          <Text>Join 302 Science</Text>
-        </BottomRow>
-        <BottomRow>
-          <Text>ID: {item.id} </Text>
-          <CopyIconContainer>
-            <CopyToClipboard
-              text={item.id}
-              onCopy={() => alert('複製 ID 成功')}>
-              <StyledImg src={copyIcon} alt="Copy" />
-            </CopyToClipboard>
-          </CopyIconContainer>
-          <Text>Link</Text>
-          <CopyIconContainer>
-            <CopyToClipboard
-              text="https://www.classswift.viewsonic.io/"
-              onCopy={() => alert('複製 Link 成功')}>
-              <StyledImg src={copyIcon} alt="Copy" />
-            </CopyToClipboard>
-          </CopyIconContainer>
-        </BottomRow>
-      </Header>
-      <Content>
-        <QRCode value="https://www.classswift.viewsonic.io/" />
-      </Content>
-    </Container>
+    <ModalWrapper>
+      <Container>
+        <Header>
+          <TopRow onClick={() => navigate(-1)}>
+            <StyledFontAwesomeIcon icon={faAngleLeft} />
+            <Text>Back to Class List</Text>
+          </TopRow>
+          <BottomRow>
+            <Text>Join 302 Science</Text>
+          </BottomRow>
+          <BottomRow>
+            <Text>ID: {item.id} </Text>
+            <CopyIconContainer>
+              <CopyToClipboard
+                text={item.id}
+                onCopy={() => alert('複製 ID 成功')}>
+                <StyledImg src={copyIcon} alt="Copy" />
+              </CopyToClipboard>
+            </CopyIconContainer>
+            <Text>Link</Text>
+            <CopyIconContainer>
+              <CopyToClipboard
+                text="https://www.classswift.viewsonic.io/"
+                onCopy={() => alert('複製 Link 成功')}>
+                <StyledImg src={copyIcon} alt="Copy" />
+              </CopyToClipboard>
+            </CopyIconContainer>
+          </BottomRow>
+        </Header>
+        <Content>
+          <QRCode value="https://www.classswift.viewsonic.io/" />
+        </Content>
+      </Container>
+    </ModalWrapper>
   );
 };
 
