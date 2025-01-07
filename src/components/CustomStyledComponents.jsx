@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+export const AppContainer = styled.div`
+  display: flex;
+`;
+
 export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   margin-right: 8px;
 `;
@@ -13,14 +17,12 @@ export const TabsHeader = styled.div`
   display: flex;
   cursor: pointer;
   border-bottom: 1px solid #30a3d2;
-  position: relative;
 `;
 
 export const Tab = styled.div.withConfig({
   shouldForwardProp: (prop) => !['active'].includes(prop),
 })`
-  padding: 10px 20px;
-  margin: 0px 5px 0px 0px;
+  padding: 10px 10px;
   font-weight: 800;
   color: ${(props) => (props.active ? '#0c8bef' : '#040404')};
   background-color: ${(props) => (props.active ? '#fff' : '#afafaf')};
@@ -33,14 +35,13 @@ export const Tab = styled.div.withConfig({
 `;
 
 export const TabContent = styled.div`
-  padding: 1.5rpm;
+  padding: 20px 0px;
   width: 90vw;
-  overflow-y: hidden;
+  height: 80vh;
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 export const IconContainer = styled.div`
@@ -66,19 +67,17 @@ export const Tooltip = styled.div.withConfig({
   transition: opacity 0.2s;
 `;
 
-
 export const Card = styled.div`
   border: 1px solid ${(props) => (props.disabled ? '#afafaf' : '#30a3d2')};
   border-radius: 4px;
-  min-width: 200px;
+  min-width: 230px;
   overflow: hidden;
-  margin: 10px;
+  margin: 5px;
 `;
 
 export const Header = styled.div`
   text-align: center;
   background-color: ${(props) => (props.disabled ? '#afafaf' : '#0c8bef')};
-  height: 2rem;
   border: 1px solid ${(props) => (props.disabled ? '#afafaf' : '#30a3d2')};
   display: flex;
   align-items: center;
@@ -94,7 +93,7 @@ export const Content = styled.div`
 
 export const ContentText = styled.p`
   font-weight: 600;
-  font-size: 36px;
+  font-size: 26px;
   color: ${(props) => (props.disabled ? '#afafaf' : 'black')};
 `;
 
@@ -127,7 +126,6 @@ export const Button = styled.button.withConfig({
   pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;
 
-
 export const Wrapper = styled.div`
   display: flex;
   flex: 1;
@@ -136,7 +134,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ModalContent = styled.div`
-background-color: #e7eaea;
+  background-color: #e7eaea;
 `;
 
 export const Modal = styled.div`
@@ -208,10 +206,12 @@ export const TableContainer = styled.div`
 
 export const SortIcon = styled.span`
   margin-left: 8px;
-  opacity: ${props => props.active ? '1' : '0.3'};
+  opacity: ${(props) => (props.active ? '1' : '0.3')};
 `;
 
-export const AmountText = styled.span`
+export const AmountText = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['completed'].includes(prop),
+})`
   color: ${(props) => (props.completed ? '#e7eaea' : '#040405')};
   font-weight: bold;
   display: inline-block;
@@ -226,4 +226,101 @@ export const StudentItem = styled.div`
 
 export const StudentName = styled.span`
   margin-right: 8px;
+`;
+
+export const DetailContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
+
+export const DetailHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+`;
+
+export const TopRow = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+export const BottomRow = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 5px 0px;
+`;
+
+export const BackText = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
+`;
+
+export const VersionText = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
+  color: #afafaf;
+`;
+
+export const Text = styled.span`
+  margin-right: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+`;
+
+export const StyledImg = styled.img`
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+`;
+
+export const CopyIconContainer = styled.div`
+  background-color: #0c8bef;
+  border-radius: 4px;
+  margin-right: 12px;
+  margin-left: 4px;
+  padding: 4px;
+  cursor: pointer;
+`;
+
+export const DetailContent = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const DetailFooter = styled.div`
+  display: flex;
+  margin: 20px 0;
+  justify-content: center;
+`;
+
+export const HomeHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+`;
+
+export const HomeBottomRow = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(231, 234, 234, 0.8);
+  z-index: 1000;
+`;
+
+export const LoadingText = styled.span`
+  font-size: 24px;
+  color: #0c8bef;
 `;

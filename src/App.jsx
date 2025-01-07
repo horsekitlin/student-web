@@ -4,11 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from './store/store';
 import HomeScreen from './screens/HomeScreen';
 import DetailScreen from './screens/DetailScreen';
-import styled from 'styled-components';
-
-const AppContainer = styled.div`
-  display: flex;
-`;
+import { AppContainer } from './components/CustomStyledComponents';
 
 const App = () => {
   return (
