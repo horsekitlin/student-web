@@ -26,7 +26,7 @@ const DetailScreen = () => {
   const navigate = useNavigate();
   const items = useSelector((state) => state.student.items);
   const item = items[id];
-
+  const itemId = item.id.split('-')[0];
   if (!item) {
     return <Navigate to="/" replace />;
   }
@@ -43,10 +43,10 @@ const DetailScreen = () => {
             <Text>Join 302 Science</Text>
           </BottomRow>
           <BottomRow>
-            <Text>ID: {item.id.split('-')[0]} </Text>
+            <Text>ID: {itemId} </Text>
             <CopyIconContainer>
               <CopyToClipboard
-                text={item.id}
+                text={itemId}
                 onCopy={() => alert('複製 ID 成功')}>
                 <StyledImg src={copyIcon} alt="Copy" />
               </CopyToClipboard>
