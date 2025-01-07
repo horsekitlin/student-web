@@ -3,7 +3,7 @@ name: build-and-deploy-student-web
 on:
   push:
     branches:
-    - main
+      - main
 
 jobs:
   build:
@@ -19,11 +19,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
+        id: build
         run: |
           npm install
           npm run build
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/student-web:latest -f ./deploy/Dockerfile .
+          VERSION_TEXT=$(grep '"version"' package.json | sed 's/.*: "\(.*\)".*/\1/')
+          echo "VERSION_TEXT=${VERSION_TEXT}" >> $GITHUB_ENV
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/student-web:${VERSION_TEXT} -f ./deploy/Dockerfile .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/student-web:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/student-web:${{ env.VERSION_TEXT }}
