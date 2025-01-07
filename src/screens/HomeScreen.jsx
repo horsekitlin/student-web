@@ -47,7 +47,7 @@ const IconContainer = styled.div`
 `;
 
 const HomeScreen = () => {
-  const {isLoading, totalAmount, unCompletedAmount} = useSelector(selectTotals);
+  const {studnetItems, isLoading, totalAmount, unCompletedAmount} = useSelector(selectTotals);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const HomeScreen = () => {
           </Text>
         </BottomRow>
       </Header>
-      <Tabs />
+      <Tabs studnetItems={studnetItems} />
     </ModalWrapper>
   );
 };

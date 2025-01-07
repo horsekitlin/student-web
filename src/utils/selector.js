@@ -10,6 +10,7 @@ export const selectTotals = createSelector(
     }, 0);
 
     return {
+      studnetItems: student.items,
       isLoading: student.isLoading,
       unCompletedAmount,
       totalAmount: student.items.length,
