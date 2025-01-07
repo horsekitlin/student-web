@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/horsekitlin/student-web/compare/v1.0.1...v1.0.2) (2025-01-07)
+
+
+### Bug Fixes
+
+* tootip 顯示超出範圍的問題 ([d3ff966](https://github.com/horsekitlin/student-web/commit/d3ff966cb88eefc462de3d966a0dc7d51042a977))
+
 ### [1.0.1](https://github.com/horsekitlin/student-web/compare/v1.0.0...v1.0.1) (2025-01-07)
 
 
