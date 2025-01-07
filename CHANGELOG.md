@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/horsekitlin/student-web/compare/v1.0.2...v1.0.3) (2025-01-07)
+
+
+### Bug Fixes
+
+* 修正複製 ID 不一致的問題 ([88016a3](https://github.com/horsekitlin/student-web/commit/88016a3ee8a32df98381623b1b4a3275b3abcf4b))
+
 ### [1.0.2](https://github.com/horsekitlin/student-web/compare/v1.0.1...v1.0.2) (2025-01-07)
 
 
