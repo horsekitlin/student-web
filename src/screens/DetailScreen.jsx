@@ -12,6 +12,8 @@ import {
   CopyIconContainer,
   DetailFooter,
   VersionText,
+  BackText,
+  DetailContent,
 } from '../components/CustomStyledComponents';
 import QRCode from 'react-qr-code';
 import copyIcon from '../assets/icons/copy.png';
