@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/horsekitlin/student-web/compare/v1.0.0...v1.0.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* 修正 detail screen 缺少 import Content 的錯誤 ([d89feb7](https://github.com/horsekitlin/student-web/commit/d89feb7ad92b1c64afc132ee505a5e2a7ae3f853))
+
 ## 1.0.0 (2025-01-07)
 
 
