@@ -53,9 +53,9 @@ export const IconContainer = styled.div`
 export const Tooltip = styled.div.withConfig({
   shouldForwardProp: (prop) => !['visible'].includes(prop),
 })`
-  position: absolute;
-  bottom: 100%;
-  left: 10%;
+  position: fixed;
+  top: 20px;
+  left: 50%;
   transform: translateX(-50%);
   background-color: #fff;
   border: 1px solid #30a3d2;
@@ -65,6 +65,7 @@ export const Tooltip = styled.div.withConfig({
   visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s;
+  z-index: 1000; 
 `;
 
 export const Card = styled.div`
